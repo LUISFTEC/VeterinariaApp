@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MenuBotonesActivity"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="800px">
+
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/fondo3"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/logo"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/bacony"
+                android:gravity="center"
+                android:text="VetConnect"
+                android:textColor="@color/black"
+                android:textSize="60sp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="40dp"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/btnListar"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@drawable/fondo_boton"
+            android:drawableTop="@drawable/lista"
+            android:text="LISTAR"
+            android:paddingTop="10dp"/>
+        <Button
+            android:id="@+id/btnProductos"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@drawable/fondo_boton"
+            android:drawableTop="@drawable/producto"
+            android:text="Procudto"
+            android:layout_marginHorizontal="15dp"
+            android:paddingTop="10dp"/>
+        <Button
+            android:id="@+id/btnTurno"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@drawable/fondo_boton"
+            android:drawableTop="@drawable/turno"
+            android:text="Turno"
+            android:paddingTop="10dp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/btnPerfil"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@drawable/fondo_boton"
+            android:drawableTop="@drawable/profile"
+            android:text="Perfil"
+            android:paddingTop="10dp"/>
+        <Button
+            android:id="@+id/btnMapa"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@drawable/fondo_boton"
+            android:drawableTop="@drawable/mapa"
+            android:text="Mapa"
+            android:layout_marginHorizontal="15dp"
+            android:paddingTop="10dp"/>
+        <Button
+            android:id="@+id/btnOtros"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@drawable/fondo_boton"
+            android:drawableTop="@drawable/otros"
+            android:text="Otros"
+            android:paddingTop="10dp"/>
+
+
+    </LinearLayout>
+
+</LinearLayout>
