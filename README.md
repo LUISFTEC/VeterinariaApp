@@ -34,7 +34,12 @@ VeterinariaApp es una aplicación móvil desarrollada en Java y Android Studio p
 
 ## Contacto
 
-Si tienes alguna pregunta o sugerencia, no dudes en contactarnos a través de [correo electrónico o cualquier otro medio de contacto].
+Si tienes alguna pregunta o sugerencia, no dudes en contactarnos a través de luisftec2022@gmail.com.
+## Redes Sociales
+
+¡Síguenos en Instagram para estar al tanto de las últimas novedades!
+
+- Instagram: [@nombredeinstagram](https://www.instagram.com/luisftec/)
 
 ¡Gracias por tu interés en VeterinariaApp!
 
