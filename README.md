@@ -39,7 +39,7 @@ Si tienes alguna pregunta o sugerencia, no dudes en contactarnos a través de lu
 
 ¡Síguenos en Instagram para estar al tanto de las últimas novedades!
 
-- Instagram: luisftec(https://www.instagram.com/luisftec/)
+- Instagram: [@luisftec](https://www.instagram.com/luisftec/)
 
 ¡Gracias por tu interés en VeterinariaApp!
 
