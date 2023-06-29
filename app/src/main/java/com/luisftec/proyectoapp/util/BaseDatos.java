@@ -31,7 +31,7 @@ public class BaseDatos extends SQLiteOpenHelper {
                 "masc_nombre TEXT NOT NULL,"+
                 "masc_edad INTEGER NOT NULL,"+
                 "masc_color TEXT NOT NULL,"+
-                "masc_genero TEXT NOT NULL,"+
+                "masc_genero INTEGER NOT NULL,"+
                 "masc_fecha INTEGER NOT NULL,"+
                 "esp_id INTEGER NOT NULL);";
         db.execSQL(query);
