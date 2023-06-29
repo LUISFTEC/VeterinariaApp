@@ -11,11 +11,13 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.luisftec.proyectoapp.entidad.Especies;
 import com.luisftec.proyectoapp.entidad.Mascotas;
 import com.luisftec.proyectoapp.util.DAOEspecies;
+import com.luisftec.proyectoapp.util.DaoMascotas;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,28 +39,24 @@ public class MainActivity extends AppCompatActivity {
         asignarReferencias();
         cargarEspecies();
         agregarEventoFlecha();
-        //obtenerGeneroSeleccionado();
-
 
         spEspecies.setOnTouchListener((v, event) -> {
             return true; // Evitar que el Spinner maneje el evento táctil
         });
-        rbMacho.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                Toast.makeText(MainActivity.this, "Género seleccionado: Macho", Toast.LENGTH_SHORT).show();
+
+        btnRegistar.setOnClickListener(v -> {
+            if(capturarDatos()){
+                DaoMascotas daoMascotas = new DaoMascotas(this);
+                daoMascotas.abrirBD();
+                String mensaje = daoMascotas.registrarMascota(mascotas);
+                mostrarMensaje(mensaje);
             }
         });
-
-        rbHembra.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                Toast.makeText(MainActivity.this, "Género seleccionado: Hembra", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-
     }
 
-    private void capturarDatos() {
+    private boolean capturarDatos() {
+
+        int esp = listaEspecies.get(spEspecies.getSelectedItemPosition()).getEsp_id();
         String nombre = txtNombre.getText().toString();
         String color = txtColor.getText().toString();
         String raza = txtRaza.getText().toString();
@@ -76,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
                 generoSeleccionado = "Hembra";
             }
         }
-        // Hacer algo con los datos capturados (nombre, color, raza, edad y género seleccionado)
+
         boolean valida = true;
         if (nombre.equals("")) {
             txtNombre.setError("Nombre es obligatorio");
@@ -99,16 +97,29 @@ public class MainActivity extends AppCompatActivity {
             valida = false;
         }
         if (valida) {
-            // Realizar acciones adicionales si la validación pasa
-            // Por ejemplo, guardar los datos en una base de datos, mostrar un mensaje de éxito, etc.
-
-            // Ejemplo de uso de la variable generoSeleccionado
-            Toast.makeText(MainActivity.this, "Género seleccionado: " + generoSeleccionado, Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "Se ha registrado correctamente", Toast.LENGTH_SHORT).show();
         }
+        if (valida) {
+            generoSeleccionado = obtenerGeneroSeleccionado();
+            mascotas = new Mascotas(nombre, color, Integer.parseInt(edad), generoSeleccionado, Integer.parseInt(fecha), esp);
+        }
+
+        return valida;
     }
 
-    private  void  asignarReferencias(){
+    private String obtenerGeneroSeleccionado() {
+        int radioButtonID = rbGrupoGenero.getCheckedRadioButtonId();
 
+        if (radioButtonID == R.id.rbMacho) {
+            return "Macho";
+        } else if (radioButtonID == R.id.rbHembra) {
+            return "Hembra";
+        }
+
+        return ""; // En caso de que no se haya seleccionado ningún botón de opción
+    }
+
+    private void asignarReferencias() {
         spEspecies = findViewById(R.id.spEspecies);
         ivFlecha = findViewById(R.id.ivFlecha);
         txtNombre = findViewById(R.id.txtNombre);
@@ -116,31 +127,32 @@ public class MainActivity extends AppCompatActivity {
         txtRaza = findViewById(R.id.txtRaza);
         txtEdad = findViewById(R.id.txtEdad);
         txtFecha = findViewById(R.id.txtFecha);
-        rbGrupoGenero =findViewById(R.id.rbGrupoGenero);
+        rbGrupoGenero = findViewById(R.id.rbGrupoGenero);
         rbMacho = findViewById(R.id.rbMacho);
         rbHembra = findViewById(R.id.rbHembra);
         btnRegistar = findViewById(R.id.btnRegistar);
-        btnRegistar.setOnClickListener(v -> {
-            capturarDatos();
-        });
-
-
     }
 
-    private void cargarEspecies(){
+    private void mostrarMensaje(String mensaje) {
+        AlertDialog.Builder ventana = new AlertDialog.Builder(this);
+        ventana.setTitle("MENSAJE DE INFORMACION");
+        ventana.setMessage(mensaje);
+        ventana.setPositiveButton("ACEPTAR", null);
+        ventana.create().show();
+    }
+
+    private void cargarEspecies() {
         DAOEspecies daoEspecies = new DAOEspecies(this);
         daoEspecies.abrirBD();
         listaEspecies = daoEspecies.cargarEspecies();
 
-        ArrayAdapter<Especies> adaptador = new ArrayAdapter<>(this,R.layout.spinner_item_luisftec, listaEspecies);
+        ArrayAdapter<Especies> adaptador = new ArrayAdapter<>(this, R.layout.spinner_item_luisftec, listaEspecies);
         spEspecies.setAdapter(adaptador);
-
     }
 
     private void agregarEventoFlecha() {
         ivFlecha.setOnTouchListener((v, event) -> {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                // Acción que deseas realizar al tocar la flecha
                 spEspecies.performClick(); // Desplegar el Spinner
                 return true;
             }

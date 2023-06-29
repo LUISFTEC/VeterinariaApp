@@ -7,11 +7,11 @@ public class Mascotas {
     private  String masc_color;
     private  int  masc_edad;
     private  String masc_genero;
-    private  String masc_fecha;
+    private  int masc_fecha;
     private  int esp_id;
 
 
-    public Mascotas(int masc_id, String masc_nombre, String masc_color, int masc_edad, String masc_genero, String masc_fecha, int esp_id) {
+    public Mascotas(int masc_id, String masc_nombre, String masc_color, int masc_edad, String masc_genero, int masc_fecha, int esp_id) {
         this.masc_id = masc_id;
         this.masc_nombre = masc_nombre;
         this.masc_color = masc_color;
@@ -21,7 +21,7 @@ public class Mascotas {
         this.esp_id = esp_id;
     }
 
-    public Mascotas(String masc_nombre, String masc_color, int masc_edad, String masc_genero, String masc_fecha, int esp_id) {
+    public Mascotas(String masc_nombre, String masc_color, int masc_edad, String masc_genero, int masc_fecha, int esp_id) {
         this.masc_nombre = masc_nombre;
         this.masc_color = masc_color;
         this.masc_edad = masc_edad;
@@ -70,11 +70,11 @@ public class Mascotas {
         this.masc_genero = masc_genero;
     }
 
-    public String getMasc_fecha() {
+    public int getMasc_fecha() {
         return masc_fecha;
     }
 
-    public void setMasc_fecha(String masc_fecha) {
+    public void setMasc_fecha(int masc_fecha) {
         this.masc_fecha = masc_fecha;
     }
 
