@@ -5,6 +5,7 @@ public class Especies {
     private  int esp_id;
     private  String esp_nombre;
 
+
     public Especies(int esp_id, String esp_nombre) {
         this.esp_id = esp_id;
         this.esp_nombre = esp_nombre;

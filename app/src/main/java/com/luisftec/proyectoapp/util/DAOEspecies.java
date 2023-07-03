@@ -24,6 +24,7 @@ public class DAOEspecies {
 
     public void abrirBD(){
         sqlBD = bd.getWritableDatabase();
+
     }
 
     public List<Especies>  cargarEspecies(){

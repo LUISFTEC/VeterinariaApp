@@ -31,10 +31,12 @@ public class DaoMascotas {
             ContentValues valores = new ContentValues();
             valores.put("masc_nombre",mascotas.getMasc_nombre());
             valores.put("masc_color",mascotas.getMasc_color());
+            valores.put("masc_raza",mascotas.getMasc_raza());
+            valores.put("masc_edad",mascotas.getMasc_edad());
             valores.put("masc_genero",mascotas.getMasc_genero());
             valores.put("masc_fecha", mascotas.getMasc_fecha());
-            valores.put("esp_id ", mascotas.getEsp_id());
-            long resultado = sqlDB.insert("especies",null,valores);
+            valores.put("esp_id", mascotas.getEsp_id());
+            long resultado = sqlDB.insert("MASCOTAS",null,valores);
             if (resultado==-1){
                 mensaje = " Error del registro de la Mascota";
             }else {

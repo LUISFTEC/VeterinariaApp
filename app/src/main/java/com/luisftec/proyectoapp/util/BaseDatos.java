@@ -8,7 +8,7 @@ public class BaseDatos extends SQLiteOpenHelper {
 
     public BaseDatos(Context context){
 
-        super(context, "MASCOTERIA.db", null,1);
+        super(context, "MASCOTERIA.db", null,7);
 
     }
 
@@ -29,10 +29,11 @@ public class BaseDatos extends SQLiteOpenHelper {
         query = "CREATE TABLE MASCOTAS("+
                 "masc_id INTEGER PRIMARY KEY AUTOINCREMENT,"+
                 "masc_nombre TEXT NOT NULL,"+
-                "masc_edad INTEGER NOT NULL,"+
                 "masc_color TEXT NOT NULL,"+
-                "masc_genero INTEGER NOT NULL,"+
-                "masc_fecha INTEGER NOT NULL,"+
+                "masc_raza TEXT NOT NULL,"+
+                "masc_edad INTEGER NOT NULL,"+
+                "masc_genero TEXT  NOT NULL,"+
+                "masc_fecha TEXT NOT NULL,"+
                 "esp_id INTEGER NOT NULL);";
         db.execSQL(query);
     }

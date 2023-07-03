@@ -1,5 +1,6 @@
 package com.luisftec.proyectoapp;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.widget.ArrayAdapter;
@@ -9,18 +10,19 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
-import android.widget.Toast;
-
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.luisftec.proyectoapp.entidad.Especies;
 import com.luisftec.proyectoapp.entidad.Mascotas;
 import com.luisftec.proyectoapp.util.DAOEspecies;
 import com.luisftec.proyectoapp.util.DaoMascotas;
-
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
     Spinner spEspecies;
@@ -31,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     ImageView ivFlecha;
     List<Especies> listaEspecies = new ArrayList<>();
     Mascotas mascotas;
+    Calendar calendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,16 +99,32 @@ public class MainActivity extends AppCompatActivity {
             txtFecha.setError("Fecha es obligatoria");
             valida = false;
         }
-        if (valida) {
-            Toast.makeText(MainActivity.this, "Se ha registrado correctamente", Toast.LENGTH_SHORT).show();
+
+        // Utilizar expresiones regulares para extraer el valor numérico de la cadena de fecha
+        Pattern pattern = Pattern.compile("\\d+"); // Buscar uno o más dígitos consecutivos
+        Matcher matcher = pattern.matcher(fecha);
+
+        int fechaConvertida;
+
+        if (matcher.find()) {
+            String numeroEnFecha = matcher.group(); // Obtener el número encontrado en la cadena
+            fechaConvertida = Integer.parseInt(numeroEnFecha);
+        } else {
+            // Manejo de caso cuando no se encuentra un número en la cadena
+            txtFecha.setError("Fecha inválida");
+            return false;
         }
+
         if (valida) {
             generoSeleccionado = obtenerGeneroSeleccionado();
-            mascotas = new Mascotas(nombre, color, Integer.parseInt(edad), generoSeleccionado, Integer.parseInt(fecha), esp);
+            mascotas = new Mascotas(nombre, color, raza, Integer.parseInt(edad), generoSeleccionado, fecha,esp);
+
         }
 
         return valida;
     }
+
+
 
     private String obtenerGeneroSeleccionado() {
         int radioButtonID = rbGrupoGenero.getCheckedRadioButtonId();
@@ -131,6 +150,19 @@ public class MainActivity extends AppCompatActivity {
         rbMacho = findViewById(R.id.rbMacho);
         rbHembra = findViewById(R.id.rbHembra);
         btnRegistar = findViewById(R.id.btnRegistar);
+
+
+
+        btnRegistar.setOnClickListener(v -> {
+            if (capturarDatos()){
+                DaoMascotas daoMascotas = new DaoMascotas(this);
+                daoMascotas.abrirBD();
+                String mensaje =  daoMascotas.registrarMascota(mascotas);
+                mostrarMensaje(mensaje);
+            }
+        });
+        txtFecha.setOnClickListener(v -> mostrarSelectorFecha());
+        calendar = Calendar.getInstance();
     }
 
     private void mostrarMensaje(String mensaje) {
@@ -145,11 +177,9 @@ public class MainActivity extends AppCompatActivity {
         DAOEspecies daoEspecies = new DAOEspecies(this);
         daoEspecies.abrirBD();
         listaEspecies = daoEspecies.cargarEspecies();
-
         ArrayAdapter<Especies> adaptador = new ArrayAdapter<>(this, R.layout.spinner_item_luisftec, listaEspecies);
         spEspecies.setAdapter(adaptador);
     }
-
     private void agregarEventoFlecha() {
         ivFlecha.setOnTouchListener((v, event) -> {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
@@ -159,4 +189,28 @@ public class MainActivity extends AppCompatActivity {
             return false;
         });
     }
+    private void mostrarSelectorFecha() {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                this,
+                (view, year, month, dayOfMonth) -> obtenerFechaSeleccionada(year, month, dayOfMonth),
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH));
+
+        // Limitar la selección de fechas mínima y máxima
+        calendar.add(Calendar.YEAR, -1); // Restar un año a la fecha actual
+        datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
+        calendar.add(Calendar.YEAR, 1); // Agregar un año a la fecha actual
+        datePickerDialog.getDatePicker().setMaxDate(calendar.getTimeInMillis());
+        calendar.add(Calendar.YEAR, -1); // Restaurar la fecha actual
+
+        datePickerDialog.show();
+    }
+    private void obtenerFechaSeleccionada(int year, int month, int dayOfMonth) {
+        calendar.set(year, month, dayOfMonth);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        String fechaSeleccionada = dateFormat.format(calendar.getTime());
+        txtFecha.setText(fechaSeleccionada);
+    }
+
 }
