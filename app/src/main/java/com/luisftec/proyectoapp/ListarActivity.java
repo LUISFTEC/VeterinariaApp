@@ -1,17 +1,13 @@
 package com.luisftec.proyectoapp;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.luisftec.proyectoapp.entidad.Mascotas;
 import com.luisftec.proyectoapp.util.BaseDatos;
 import com.luisftec.proyectoapp.util.DaoMascotas;
-
 import java.util.ArrayList;
 import java.util.List;
 

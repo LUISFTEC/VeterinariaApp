@@ -28,13 +28,15 @@ import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
     Spinner spEspecies;
-    EditText txtNombre, txtColor, txtRaza, txtEdad, txtFecha;
+    EditText txtNombre, txtColor, txtGenero, txtRaza, txtEdad, txtFecha;
     RadioGroup rbGrupoGenero;
     RadioButton rbMacho, rbHembra;
     Button btnRegistar;
     ImageView ivFlecha;
     List<Especies> listaEspecies = new ArrayList<>();
     Mascotas mascotas;
+    boolean registra = true;
+    int id;
     Calendar calendar;
 
     @Override
@@ -44,19 +46,31 @@ public class MainActivity extends AppCompatActivity {
         asignarReferencias();
         cargarEspecies();
         agregarEventoFlecha();
-
+        verificarSiModifico();
         spEspecies.setOnTouchListener((v, event) -> {
             return true; // Evitar que el Spinner maneje el evento táctil
         });
+    }
+    private void verificarSiModifico(){
+        if(getIntent().hasExtra("p_id")){
+            registra = false;
+            txtNombre.setText(getIntent().getStringExtra("p_nombre"));
+            txtColor.setText(getIntent().getStringExtra("p_color"));
+            txtRaza.setText(getIntent().getStringExtra("p_raza"));
+            txtEdad.setText(getIntent().getStringExtra("p_edad"));
+            //txtGenero.setText(getIntent().getStringExtra("p_genero"));
+            txtFecha.setText(getIntent().getStringExtra("p_fecha"));
+            id = Integer.parseInt(getIntent().getStringExtra("p_id"));
 
-        btnRegistar.setOnClickListener(v -> {
-            if(capturarDatos()){
-                DaoMascotas daoMascotas = new DaoMascotas(this);
-                daoMascotas.abrirBD();
-                String mensaje = daoMascotas.registrarMascota(mascotas);
-                mostrarMensaje(mensaje);
+            int valor = Integer.parseInt(getIntent().getStringExtra("p_especie"));
+            ArrayAdapter<Especies> adapter = (ArrayAdapter<Especies>) spEspecies.getAdapter();
+            for (int pos =1; pos < adapter.getCount()+1; pos++){
+                if (adapter.getItemId(pos) == valor){
+                    spEspecies.setSelection(pos -1);
+                }
             }
-        });
+        }
+
     }
 
     private boolean capturarDatos() {
@@ -118,15 +132,17 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (valida) {
-            generoSeleccionado = obtenerGeneroSeleccionado();
-            mascotas = new Mascotas(nombre, color, raza, Integer.parseInt(edad), generoSeleccionado, fecha,esp);
-
+            if (registra){
+                //registrando mascotas
+                generoSeleccionado = obtenerGeneroSeleccionado();
+                mascotas = new Mascotas(nombre, color, raza, Integer.parseInt(edad), generoSeleccionado, fecha,esp);
+            }else {
+                //actualizar
+                mascotas = new Mascotas(id,nombre, color, raza, Integer.parseInt(edad), generoSeleccionado, fecha,esp);
+            }
         }
-
         return valida;
     }
-
-
 
     private String obtenerGeneroSeleccionado() {
         int radioButtonID = rbGrupoGenero.getCheckedRadioButtonId();
@@ -152,14 +168,16 @@ public class MainActivity extends AppCompatActivity {
         rbMacho = findViewById(R.id.rbMacho);
         rbHembra = findViewById(R.id.rbHembra);
         btnRegistar = findViewById(R.id.btnRegistar);
-
-
-
         btnRegistar.setOnClickListener(v -> {
             if (capturarDatos()){
                 DaoMascotas daoMascotas = new DaoMascotas(this);
                 daoMascotas.abrirBD();
-                String mensaje =  daoMascotas.registrarMascota(mascotas);
+                String mensaje = "";
+                if (registra){
+                   mensaje = daoMascotas.registrarMascota(mascotas);
+                }else {
+                    mensaje = daoMascotas.modificarMascota(mascotas);
+                }
                 mostrarMensaje(mensaje);
             }
         });

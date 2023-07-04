@@ -1,9 +1,11 @@
 package com.luisftec.proyectoapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -41,6 +43,18 @@ public class AdaptadorPersonalizado extends RecyclerView.Adapter<AdaptadorPerson
         holder.filaEdad.setText(listaMascotas.get(position).getMasc_edad()+"");
         holder.filaGenero.setText(listaMascotas.get(position).getMasc_genero()+"");
         holder.filaFecha.setText(listaMascotas.get(position).getMasc_fecha());
+        holder.filaEditar.setOnClickListener(v -> {
+            Intent intent = new Intent(context, MainActivity.class);
+            intent.putExtra("p_id",listaMascotas.get(position).getMasc_id()+"");
+            intent.putExtra("p_nombre",listaMascotas.get(position).getMasc_nombre()+"");
+            intent.putExtra("p_color",listaMascotas.get(position).getMasc_color()+"");
+            intent.putExtra("p_raza",listaMascotas.get(position).getMasc_raza()+"");
+            intent.putExtra("p_edad",listaMascotas.get(position).getMasc_edad()+"");
+            intent.putExtra("p_genero",listaMascotas.get(position).getMasc_genero()+"");
+            intent.putExtra("p_fecha",listaMascotas.get(position).getMasc_fecha()+"");
+            intent.putExtra("p_especie",listaMascotas.get(position).getEsp_id()+"");
+            context.startActivity(intent);
+        });
     }
 
     @Override
@@ -50,6 +64,7 @@ public class AdaptadorPersonalizado extends RecyclerView.Adapter<AdaptadorPerson
 
     public class MiviewHolder extends  RecyclerView.ViewHolder{
         TextView filaNombre, filaColor,filaRaza,filaEdad,filaGenero,filaFecha;
+        ImageButton filaEliminar, filaEditar;
         public MiviewHolder(@NonNull View itemView) {
             super(itemView);
             filaNombre = itemView.findViewById(R.id.filaNombre);
@@ -58,6 +73,8 @@ public class AdaptadorPersonalizado extends RecyclerView.Adapter<AdaptadorPerson
             filaEdad = itemView.findViewById(R.id.filaEdad);
             filaGenero = itemView.findViewById(R.id.filaGenero);
             filaFecha = itemView.findViewById(R.id.filaFecha);
+            filaEditar = itemView.findViewById(R.id.filaEditar);
+            filaEliminar = itemView.findViewById(R.id.filaEliminar);
         }
     }
 }

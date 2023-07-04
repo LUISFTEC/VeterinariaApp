@@ -14,7 +14,6 @@ public class BaseDatos extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-
         String query;
         query = "CREATE TABLE especies("+
                 "esp_id INTEGER PRIMARY KEY AUTOINCREMENT, "+
