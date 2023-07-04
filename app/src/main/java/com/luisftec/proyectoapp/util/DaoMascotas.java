@@ -73,6 +73,22 @@ public class DaoMascotas {
         }
         return mensaje;
     }
+    public String eliminarMascota(int id){
+
+        String mensaje = " ";
+        try{
+
+            long resultado = sqlDB.delete("MASCOTAS", "masc_id="+id,null);
+            if (resultado==-1){
+                mensaje = "Error al eliminar Mascota";
+            }else {
+                mensaje= "Mascota eliminada satisfactoriamente";
+            }
+        }catch (Exception e){
+            Log.d("==>",e.toString());
+        }
+        return mensaje;
+    }
     public List<Mascotas> cargarMascota(){
         List<Mascotas> listaMascotas = new ArrayList<>();
         try {

@@ -1,6 +1,7 @@
 package com.luisftec.proyectoapp;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,9 +10,11 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.luisftec.proyectoapp.entidad.Mascotas;
+import com.luisftec.proyectoapp.util.DaoMascotas;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +58,38 @@ public class AdaptadorPersonalizado extends RecyclerView.Adapter<AdaptadorPerson
             intent.putExtra("p_especie",listaMascotas.get(position).getEsp_id()+"");
             context.startActivity(intent);
         });
+        holder.filaEliminar.setOnClickListener(v -> {
+            confirmar(listaMascotas.get(position).getMasc_id());
+        });
+    }
+    private void confirmar(int id) {
+        AlertDialog.Builder ventana = new AlertDialog.Builder(context);
+        ventana.setTitle("MENSAJE DE INFORMACION");
+        ventana.setMessage("Eliminaras la mascota!");
+        ventana.setPositiveButton("ACEPTAR", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                DaoMascotas daoMascotas = new DaoMascotas(context);
+                daoMascotas.abrirBD();
+                String mensaje = daoMascotas.eliminarMascota(id);
+                mostrarMensaje(mensaje);
+            }
+        });
+        ventana.setNegativeButton("Cancelar",null);
+        ventana.create().show();
+    }
+    private void mostrarMensaje(String mensaje) {
+        AlertDialog.Builder ventana = new AlertDialog.Builder(context);
+        ventana.setTitle("MENSAJE DE INFORMACION");
+        ventana.setMessage(mensaje);
+        ventana.setPositiveButton("ACEPTAR", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(context, ListarActivity.class);
+                context.startActivity(intent);
+            }
+        });
+        ventana.create().show();
     }
 
     @Override
