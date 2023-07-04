@@ -1,6 +1,8 @@
 package com.luisftec.proyectoapp;
 
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.widget.ArrayAdapter;
@@ -169,7 +171,13 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog.Builder ventana = new AlertDialog.Builder(this);
         ventana.setTitle("MENSAJE DE INFORMACION");
         ventana.setMessage(mensaje);
-        ventana.setPositiveButton("ACEPTAR", null);
+        ventana.setPositiveButton("ACEPTAR", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(MainActivity.this, ListarActivity.class);
+                startActivity(intent);
+            }
+        });
         ventana.create().show();
     }
 

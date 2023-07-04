@@ -2,10 +2,14 @@ package com.luisftec.proyectoapp.util;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.luisftec.proyectoapp.entidad.Mascotas;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DaoMascotas {
 
@@ -47,6 +51,29 @@ public class DaoMascotas {
             Log.d("==>",e.toString());
         }
         return mensaje;
+    }
+
+    public List<Mascotas> cargarMascota(){
+        List<Mascotas> listaMascotas = new ArrayList<>();
+        try {
+            //ejecuta y devueleve la tabla o similar
+            Cursor c = sqlDB.rawQuery("SELECT * FROM mascotas",null);
+            while (c.moveToNext()){
+                listaMascotas.add(new Mascotas(
+                        c.getInt(0),
+                        c.getString(1),
+                        c.getString(2),
+                        c.getString(3),
+                        c.getInt(4),
+                        c.getString(5),
+                        c.getString(6),
+                        c.getInt(7)));
+            }
+
+        }catch (Exception e){
+            Log.d("==>",e.toString());
+        }
+        return  listaMascotas;
     }
 
 }
