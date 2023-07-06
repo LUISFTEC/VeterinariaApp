@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     boolean registra = true;
     int id;
     Calendar calendar;
+    Button btnVeterinariaApp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -196,7 +197,13 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        ventana.create().show();
+        AlertDialog dialog = ventana.create();
+
+        // Establecer el fondo personalizado del diálogo
+        dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialogo_personalizado);
+
+        // Mostrar el diálogo
+        dialog.show();
     }
 
     private void cargarEspecies() {

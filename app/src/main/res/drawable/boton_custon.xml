@@ -1,0 +1,23 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true">
+        <shape>
+            <solid android:color="#44B1A6" />
+            <corners android:radius="8dp" /> <!-- Radio de las esquinas para hacer el botón redondeado -->
+            <stroke
+                android:width="2dp"
+            android:color="#808080" /> <!-- Color del borde -->
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <gradient
+                android:startColor="#CC0E9284"
+                android:endColor="#0E9284"
+                android:angle="90" />
+            <corners android:radius="8dp" /> <!-- Radio de las esquinas para hacer el botón redondeado -->
+            <stroke
+                android:width="2dp"
+            android:color="#808080" /> <!-- Color del borde -->
+        </shape>
+    </item>
+</selector>
