@@ -24,17 +24,17 @@
             android:gravity="center"/>
 
         <EditText
-            android:id="@+id/editTextName"
+            android:id="@+id/correo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nombre completo" />
+            android:hint="Correo" />
 
         <EditText
-            android:id="@+id/editTextEmail"
+            android:id="@+id/contrasenia"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Correo electrónico"
-            android:inputType="textEmailAddress" />
+            android:hint="Contraseña"
+            android:inputType="textPassword"/>
 
         <EditText
             android:id="@+id/txtContrasenia"
@@ -48,6 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/input_personalizado1"
+            android:onClick="registrarUsuario"
             android:text="Registrarse" />
 
     </LinearLayout>

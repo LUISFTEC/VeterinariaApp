@@ -44,6 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:background="@drawable/input_personalizado1"
+            android:onClick="iniciarSeccion"
             android:text="Iniciar sesión" />
 
     </LinearLayout>
