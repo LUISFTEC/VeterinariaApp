@@ -66,6 +66,7 @@ public class AdaptadorPersonalizado extends RecyclerView.Adapter<AdaptadorPerson
         AlertDialog.Builder ventana = new AlertDialog.Builder(context);
         ventana.setTitle("MENSAJE DE INFORMACION");
         ventana.setMessage("Eliminaras la mascota!");
+
         ventana.setPositiveButton("ACEPTAR", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -76,7 +77,12 @@ public class AdaptadorPersonalizado extends RecyclerView.Adapter<AdaptadorPerson
             }
         });
         ventana.setNegativeButton("Cancelar",null);
-        ventana.create().show();
+        AlertDialog dialog = ventana.create();
+
+        // Establecer el fondo personalizado del diálogo
+        dialog.getWindow().setBackgroundDrawable(context.getResources().getDrawable(R.drawable.dialogo_personalizado));
+
+        dialog.show();
     }
     private void mostrarMensaje(String mensaje) {
         AlertDialog.Builder ventana = new AlertDialog.Builder(context);

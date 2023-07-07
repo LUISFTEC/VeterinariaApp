@@ -3,7 +3,7 @@
     <style name="Base.Theme.ProyectoApp" parent="Theme.AppCompat.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
-        <item name="colorPrimary">@color/Mascota</item>
+        <item name="colorPrimary">#0E9284</item>
         <item name="colorPrimaryVariant">@color/gris</item>
     </style>
 

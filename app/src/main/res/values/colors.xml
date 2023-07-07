@@ -2,7 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="Mascota">#00E1FF</color>
+    <color name="Mascota">#0E9284</color>
     <color name="gris">#636363</color>
     <color name="grisclaro">#CDCDCD</color>
     <color name="colorCardBackground">#FF0000</color>
